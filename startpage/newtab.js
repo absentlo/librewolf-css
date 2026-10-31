@@ -34,7 +34,8 @@ function tick() {
 tick();
 
 // Wallpaper: stored as a data URL because Brave's storage.local can't hold Blobs (this page is shared with Brave).
-const MAX_WALL_BYTES = 10 * 1024 * 1024;  // the base64 string is decoded on every new tab
+const MAX_WALL_BYTES = 10 * 1024 * 1024;
+const MAX_WALL_WIDTH = 1920;
 const wallFile = document.getElementById("wall-file");
 const wallRemove = document.getElementById("wall-remove");
 
@@ -44,21 +45,45 @@ function showWall(url) {
   wallRemove.hidden = !url;
 }
 
+// The saved image is read and decoded on every new tab, so it's stored small. WebP keeps transparency.
+// shortcut: 4K screens get a slightly soft wallpaper and animations become still, raise the width or keep the original if anyone asks.
+async function shrinkWall(file) {
+  const src = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    img.src = src;
+    await img.decode();
+    const scale = Math.min(1, MAX_WALL_WIDTH / img.naturalWidth);
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(img.naturalWidth * scale);
+    canvas.height = Math.round(img.naturalHeight * scale);
+    canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+    const url = canvas.toDataURL("image/webp", 0.8);
+    if (!url.startsWith("data:image/")) throw new Error("image has no usable size");
+    return url;
+  } finally {
+    URL.revokeObjectURL(src);
+  }
+}
+
 document.getElementById("wall-pick").onclick = () => wallFile.click();
 wallRemove.onclick = () => chrome.storage.local.remove("wallpaper").then(() => showWall(null));
 
-wallFile.onchange = () => {
+wallFile.onchange = async () => {
   const file = wallFile.files[0];
   wallFile.value = "";  // lets the same file be picked again
   if (!file) return;
   if (!file.type.startsWith("image/")) return alert("That file is not an image.");
   if (file.size > MAX_WALL_BYTES) return alert("Image is over 10 MB, pick a smaller one.");
-  const reader = new FileReader();
-  reader.onerror = () => alert("Could not read that image.");
-  reader.onload = () => chrome.storage.local.set({ wallpaper: reader.result })
-    .then(() => showWall(reader.result))
+  let wallpaper;
+  try {
+    wallpaper = await shrinkWall(file);
+  } catch {
+    return alert("Could not read that image.");
+  }
+  chrome.storage.local.set({ wallpaper })
+    .then(() => showWall(wallpaper))
     .catch((e) => alert(`Could not save the wallpaper: ${e.message}`));
-  reader.readAsDataURL(file);
 };
 
 // Customize panel: which sections show, my pages, most visited, weather.

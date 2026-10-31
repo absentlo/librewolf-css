@@ -27,8 +27,7 @@ user_pref("ui.prefersReducedMotion", 1);
 user_pref("media.ffmpeg.vaapi.enabled", true);
 // Perf: no AV1. Most older CPUs and GPUs can only decode it in software, so sites fall back to a lighter format
 user_pref("media.av1.enabled", false);
-// Perf: fewer content processes and cached back/forward pages, for around 8 GB of RAM
-user_pref("dom.ipc.processCount", 4);
+// Perf: fewer cached back/forward pages, for around 8 GB of RAM
 user_pref("browser.sessionhistory.max_total_viewers", 2);
 // Perf: write session to disk every 60s instead of 15s
 user_pref("browser.sessionstore.interval", 60000);

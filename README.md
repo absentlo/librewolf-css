@@ -42,7 +42,7 @@ For private windows too: in `about:addons`, open **Graphite Start** and set **Ru
 - **Clock:** 12 or 24 hour, three sizes, your time zone, and your name in the greeting.
 - **Search:** six engines, each with its logo in gray.
 - **Weather:** your city in °C or °F, with icons for the conditions and for day or night.
-- **Wallpaper:** your own image, with a darkness slider.
+- **Wallpaper:** your own image, with a darkness slider. It's resized to 1920 px wide to keep new tabs fast, and animated images become still.
 - **My pages and Most visited:** gray logos, custom names and logo-only buttons. Set how many show per page, then browse with the arrows, the mouse wheel or the left and right keys.
 - **Backup:** export and import all of this as one file.
 
