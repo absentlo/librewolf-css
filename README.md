@@ -32,6 +32,8 @@ Restart LibreWolf. The script backs up your existing `user.js` and `chrome` fold
 
 Open a new tab and click the pencil in the bottom-right corner.
 
+For private windows too: in `about:addons`, open **Graphite Start** and set **Run in Private Windows** to **Allow**.
+
 > **Firefox:** only LibreWolf 159 has been tested. Regular Firefox refuses unsigned add-ons, so load `startpage/manifest.json` from `about:debugging` instead. It disappears when the browser restarts.
 
 ## What the pencil panel does

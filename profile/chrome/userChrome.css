@@ -54,7 +54,7 @@ menupopup, panel { --panel-border-radius: var(--g-radius) !important; }
 .toolbarbutton-1:hover > .toolbarbutton-badge-stack { fill: var(--g-fg) !important; }
 
 /* Rice font on tabs and url bar */
-.tab-label, #urlbar-input, .urlbarView {
+.tab-label, #urlbar-input, #identity-icon-label, .urlbarView {
   font-family: var(--g-font) !important;
   font-size: var(--g-font-size) !important;
 }
