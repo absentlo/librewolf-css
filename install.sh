@@ -70,7 +70,7 @@ if ((addon)); then
     command -v zip >/dev/null || { echo "zip is not installed. Install it, or use --no-addon." >&2; exit 1; }
     mkdir -p "$here/dist"
     rm -f "$here/dist/graphite-start.xpi"
-    (cd "$here/startpage" && zip -qr "$here/dist/graphite-start.xpi" manifest.json newtab.*)
+    (cd "$here/startpage" && zip -qr "$here/dist/graphite-start.xpi" .)
     echo "Built the start page: $here/dist/graphite-start.xpi"
 fi
 

@@ -25,6 +25,8 @@ user_pref("browser.tabs.tabMinWidth", 60);
 user_pref("ui.prefersReducedMotion", 1);
 // Perf: GPU video decode when the driver supports it (falls back to the CPU on error)
 user_pref("media.ffmpeg.vaapi.enabled", true);
+// Perf: no AV1. Most older CPUs and GPUs can only decode it in software, so sites fall back to a lighter format
+user_pref("media.av1.enabled", false);
 // Perf: fewer content processes and cached back/forward pages, for around 8 GB of RAM
 user_pref("dom.ipc.processCount", 4);
 user_pref("browser.sessionhistory.max_total_viewers", 2);

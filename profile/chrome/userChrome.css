@@ -44,7 +44,7 @@
 }
 
 /* Rounded url bar, popups and menus */
-#urlbar-background, .urlbarView { border-radius: var(--g-radius) !important; }
+.urlbar-background, .urlbarView { border-radius: var(--g-radius) !important; }
 menupopup, panel { --panel-border-radius: var(--g-radius) !important; }
 
 /* Gray icons, brighter on hover */
@@ -70,7 +70,7 @@ menupopup, panel { --panel-border-radius: var(--g-radius) !important; }
 .tabbrowser-tab:not([selected]):not(:hover) .tab-close-button { display: none !important; }
 
 /* Flat url bar with a subtle border */
-#urlbar-background {
+.urlbar-background {
   border: 1px solid var(--g-border) !important;
   box-shadow: none !important;
 }
@@ -153,7 +153,7 @@ menupopup, panel, #PersonalToolbar, findbar, .panel-subview-body {
 
 /* URL bar: muted placeholder and site icons, gray text selection */
 #urlbar-input::placeholder { color: var(--g-muted) !important; opacity: 1 !important; }
-#identity-box, #tracking-protection-icon-container, #page-action-buttons {
+#identity-box, #trust-icon-container, #page-action-buttons {
   fill: var(--g-icon) !important;
 }
 #urlbar-input::selection { background-color: var(--g-border) !important; color: var(--g-fg) !important; }
@@ -181,10 +181,10 @@ menupopup .bookmark-item:not([_moz-menuactive]) :is(.menu-icon, .menu-iconic-ico
 /* Playing/muted tab indicator in gray instead of the default color */
 .tab-icon-overlay, .tab-audio-button { fill: var(--g-icon) !important; }
 
-/* Graphite start page (extension new tab): no "Extension (...)" chip or shield,
-   the bar just shows the search placeholder. Normal sites keep both icons. */
+/* Graphite start page (extension new tab): no "Extension (...)" chip, shield or bookmark star,
+   the bar just shows the search placeholder. Normal sites keep all of them. */
 #identity-box.extensionPage #identity-icon-box,
-#urlbar-input-container:has(#identity-box.extensionPage) #tracking-protection-icon-container {
+.urlbar-input-container:has(#identity-box.extensionPage) :is(#trust-icon-container, #star-button-box) {
   display: none !important;
 }
 

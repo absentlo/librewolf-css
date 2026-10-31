@@ -1,155 +1,97 @@
 # Graphite LibreWolf
 
-A minimal gray theme for LibreWolf, with a customizable new tab page. It is built for low-spec PCs: no animations, no background code, and no network use unless you turn it on.
+A minimal gray theme and customizable new tab page for LibreWolf, built for low-spec PCs: no animations, no background code, and no network use unless you turn it on.
+
+> **Version 0.5: early testing.** Expect rough edges and changes.
 
 ![LibreWolf with the Graphite theme and start page](screenshots/start-page.png)
 
 ![The customize panel](screenshots/customize.png)
 
-## What you get
-
-**Theme (`profile/`)**
-- Flat grays everywhere: tabs, toolbar, menus, address bar, settings and add-on pages.
-- A compact layout with thinner tabs and toolbars.
-- Gray icons on background tabs and bookmarks.
-- Performance preferences for machines with around 8 GB of RAM.
-
-**Start page (`startpage/`)**, all set from the pencil button in the corner:
-- Clock, date and greeting, and search. Hide any of them, including the logo.
-- Your own wallpaper.
-- Weather for your city, with icons for the conditions and for day or night.
-- Your pages and your most visited sites, with logos recolored to the gray palette.
-- A custom name or logo-only display for each of your pages.
-- A limit on sites per page. Past that limit, browse with the arrows, the mouse wheel or the left and right keys.
-
-## Why a new profile loses everything
-
-LibreWolf and Firefox keep your theme and settings **inside the profile folder**, not in the browser. A new profile starts as an empty folder, so `user.js` and the `chrome` folder are simply not there, and the browser looks like it did on day one.
-
-The fix is to copy those files into the new profile. That is all `install.sh` does, and you can do it by hand too.
-
-| File | Where it goes | What it does |
-|---|---|---|
-| `profile/user.js` | `<profile>/user.js` | Preferences, applied at every start |
-| `profile/chrome/userChrome.css` | `<profile>/chrome/userChrome.css` | Styles the browser itself |
-| `profile/chrome/userContent.css` | `<profile>/chrome/userContent.css` | Styles settings and internal pages |
-| `startpage/` | Installed as an add-on | The new tab page |
-
 ## Install
 
-### 1. Install the font
+You need LibreWolf opened at least once, plus `zip` and [JetBrainsMono Nerd Font](https://www.nerdfonts.com/) (on Arch: `sudo pacman -S zip ttf-jetbrains-mono-nerd`).
 
-The theme uses JetBrainsMono Nerd Font. On Arch:
-
-```sh
-sudo pacman -S ttf-jetbrains-mono-nerd
-```
-
-To use another font, change `--g-font` at the top of `userChrome.css`.
-
-### 2. Install the theme
-
-Open the browser at least once so the profile exists, then run:
+**1. Install the theme**
 
 ```sh
-git clone <this repository's URL>
-cd graphite-librewolf
+git clone https://github.com/absentlo/librewolf-css.git
+cd librewolf-css
 ./install.sh
 ```
 
-If you have several profiles, it asks which one to use. Open `about:profiles` in the browser to see which is in use, or name it directly:
+Restart LibreWolf. The script backs up your existing `user.js` and `chrome` folder first. With several profiles it asks which one to use, and `about:profiles` shows the one in use.
 
-```sh
-./install.sh --profile ~/.config/librewolf/librewolf/xxxxxxxx.default-release
-```
+**2. Install the start page**
 
-The script backs up an existing `user.js` and `chrome` folder as `<name>.bak-<timestamp>`, then builds the add-on into `dist/`. It needs `zip`. Use `--no-addon` if you only want the theme.
-
-Restart the browser to see the theme.
-
-<details>
-<summary>Install the theme by hand</summary>
-
-1. Open `about:profiles` and click **Open Directory** next to the profile in use.
-2. Copy `profile/user.js` into that folder.
-3. Create a folder named `chrome` there, and copy both `.css` files into it.
-4. Restart the browser.
-
-</details>
-
-### 3. Install the start page
-
-The add-on isn't signed by Mozilla, so the browser has to be told to accept it.
-
-**LibreWolf**
-
-1. Open `about:config` and set `xpinstall.signatures.required` to `false`.
+1. Open `about:config` and set `xpinstall.signatures.required` to `false`. The add-on isn't signed by Mozilla, and this lets LibreWolf install any unsigned add-on, so only install files you trust.
 2. Open `about:addons`, click the gear, and choose **Install Add-on From File**.
-3. Pick `dist/graphite-start.xpi`, then click **Add**.
+3. Pick `dist/graphite-start.xpi`, also available from [Releases](https://github.com/absentlo/librewolf-css/releases), and click **Add**.
 
-This setting lets the browser install any unsigned add-on, so only install add-on files you trust.
-
-**Firefox**
-
-Regular Firefox ignores that setting and refuses unsigned add-ons. You have two options:
-
-- Open `about:debugging`, choose **This Firefox**, then **Load Temporary Add-on**, and pick `startpage/manifest.json`. It disappears when the browser restarts.
-- Use Firefox Developer Edition, Nightly or ESR, which do honor the setting above.
-
-Only LibreWolf 159 on Arch Linux has been tested. Firefox shares the same base, but its interface can differ.
-
-### 4. Set up the start page
+**3. Customize it**
 
 Open a new tab and click the pencil in the bottom-right corner.
 
-Start page settings (wallpaper, pages, city) live inside the add-on's storage in the profile, so `install.sh` can't copy them. Set them again in each new profile.
+> **Firefox:** only LibreWolf 159 has been tested. Regular Firefox refuses unsigned add-ons, so load `startpage/manifest.json` from `about:debugging` instead. It disappears when the browser restarts.
 
-## Moving to a new profile
+## What the pencil panel does
 
-1. Create the profile and open it once.
-2. Run `./install.sh` and choose the new profile.
-3. Install the add-on again (step 3 above) and set up the start page.
+- **Sections:** show or hide the logo, clock, date, search, pages and weather.
+- **Clock:** 12 or 24 hour, three sizes, your time zone, and your name in the greeting.
+- **Search:** six engines, each with its logo in gray.
+- **Weather:** your city in °C or °F, with icons for the conditions and for day or night.
+- **Wallpaper:** your own image, with a darkness slider.
+- **My pages and Most visited:** gray logos, custom names and logo-only buttons. Set how many show per page, then browse with the arrows, the mouse wheel or the left and right keys.
+- **Backup:** export and import all of this as one file.
 
-Copy only the files listed here, not a whole profile folder. A copied profile carries its identity with it, and the browser can end up pointing at the copy instead of your real profile.
+## New profile? Your theme is gone
 
-## Customize
+Your theme lives **inside the profile folder**, and a new profile starts empty. To bring everything back:
 
-- **Colors:** edit the variables at the top of `userChrome.css`, then restart. The start page has its own copy at the top of `startpage/newtab.css`.
-- **Window buttons:** they stay visible by default. On a tiling window manager such as i3 or sway, uncomment the `.titlebar-buttonbox-container` block in `userChrome.css` to hide them.
-- **Preferences:** every line in `user.js` has a comment. Delete what you don't want, then **also reset it in `about:config`**, because deleted lines don't undo a value that was already applied.
-- **Search engine:** change the form's `action` in `startpage/newtab.html`.
-- **Time zone:** the clock normally follows the browser. If it shows the wrong time, which can happen with fingerprinting protection, type your zone in the **Clock** field of the panel, such as `Europe/Berlin`.
+1. In the old profile, open the panel and click **export**.
+2. Open the new profile once, close it, and run `./install.sh`.
+3. Install the start page again (step 2 above), then click **import**.
+4. Tick **Page icons** and **Most visited** again, since permissions don't carry over.
 
-After changing anything in `startpage/`, raise `version` in `manifest.json`, run `./install.sh`, and install the new `.xpi`.
+The backup holds your wallpaper and page addresses in plain text, so keep it private.
 
-**Before you update the add-on,** keep a normal website tab open. Updating closes the start page's own tabs, and if those are the only tabs open, the window closes too.
+Don't copy a whole profile folder: the browser can end up pointing at the copy instead of your real profile.
+
+## Change things
+
+- **Colors:** the variables at the top of `userChrome.css` and of `startpage/newtab.css`.
+- **Font:** `--g-font` in `userChrome.css`.
+- **Window buttons:** on a tiling window manager such as i3 or sway, uncomment the marked block in `userChrome.css` to hide them.
+- **Preferences:** `user.js` has a comment on every setting. If you delete a line, also reset that setting in `about:config`.
+- **Video:** `user.js` turns off AV1, which helps most older PCs. If your GPU decodes AV1, delete that line and reset the setting.
+- **The start page's code:** raise `version` in `startpage/manifest.json`, run `./install.sh`, and install the new `.xpi`.
+
+**Before updating the add-on,** keep a normal website tab open. Updating closes the start page's tabs, and if they're the only ones open, the window closes too.
 
 ## Privacy
 
-Everything is off until you turn it on, and the browser asks before the two options that need a permission.
+These are all off until you turn them on.
 
-| Option | Contacts | What it can see |
+| Option | What it contacts | What that sees |
 |---|---|---|
-| Weather | [Open-Meteo](https://open-meteo.com/) | Your IP address and your city, when you set a city and at most every 30 minutes after that |
-| Page icons | DuckDuckGo's icon service | Your IP address and the site's name, once per site. Icons are then stored locally |
-| Most visited | Nothing | Reads your browsing history locally, and needs your permission |
+| Weather | [Open-Meteo](https://open-meteo.com/) | Your IP address and city, at most every 30 minutes |
+| Page icons | DuckDuckGo's icon service | Your IP address and the site's name, once per site |
+| Most visited | Nothing | Your history is read locally, with your permission |
 
-Search goes to DuckDuckGo. The rest of the page makes no network requests.
+Searches go to the engine you pick. Nothing else on the page uses the network.
 
-## Troubleshooting
+## Problems
 
-- **The theme doesn't appear:** check that `toolkit.legacyUserProfileCustomizations.stylesheets` is `true` in `about:config`, that the `chrome` folder is inside the profile in use, and that you restarted.
-- **"This add-on could not be installed because it has not been verified":** see step 3.
-- **Something looks wrong after a browser update:** browser updates sometimes rename the internal parts this theme targets. Open `about:config`, set `devtools.chrome.enabled` to `true`, then press `Ctrl+Alt+Shift+I` to inspect the browser.
-- **Most visited is empty:** the browser needs some browsing history before it has sites to show.
-- **A setting keeps coming back after you change it:** `user.js` reapplies its values at every start, so change it there.
+- **No theme:** check that `toolkit.legacyUserProfileCustomizations.stylesheets` is `true` and that you installed into the profile in use.
+- **"Could not be verified" on the add-on:** set `xpinstall.signatures.required` to `false`.
+- **Something broke after a browser update:** updates can rename what the theme targets. Set `devtools.chrome.enabled` to `true`, then press `Ctrl+Alt+Shift+I` to inspect the browser.
+- **Wrong time:** type your zone in **Time zone**, such as `Europe/Berlin`.
+- **A setting keeps coming back:** `user.js` reapplies at every start, so change it there.
 
 ## Uninstall
 
-1. Remove the add-on from `about:addons`. This deletes its saved wallpaper and settings.
-2. In the profile folder, delete `user.js` and `chrome`, or restore your `.bak-` copies.
-3. Reset any preferences you want back in `about:config`, since deleting `user.js` doesn't undo values already applied.
+Remove the add-on from `about:addons`, which deletes its settings. Then delete `user.js` and `chrome` from the profile folder, or restore your `.bak-` copies, and reset any settings you want back in `about:config`.
 
-## Credits and license
+## License
 
-MIT, see [LICENSE](LICENSE). Some icons are adapted from [Lucide](https://lucide.dev/), and the Arch Linux logo belongs to Arch Linux; both are covered in that file. To remove the logo, untick **Logo** in the panel or delete it from `startpage/newtab.html`.
+MIT, see [LICENSE](LICENSE). The logos and some icons belong to others, see [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES).
