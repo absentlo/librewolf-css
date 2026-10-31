@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
-# Copies the Graphite config into a LibreWolf or Firefox profile and builds the start page add-on.
-# Usage: ./install.sh [--profile DIR] [--no-addon]
+# Copies the Graphite config into a LibreWolf or Firefox profile.
+# Usage: ./install.sh [--profile DIR] [--build-addon]
+# --build-addon also builds an unsigned start page in dist/, for working on its code.
 # Anything it would replace is first saved as <name>.bak-<timestamp> next to the original.
 set -euo pipefail
 
 here="$(cd "$(dirname "$0")" && pwd)"
 profile=""
-addon=1
+addon=0
 
 while (($#)); do
     case "$1" in
         --profile) [[ $# -ge 2 ]] || { echo "--profile needs a folder" >&2; exit 2; }; profile="$2"; shift 2 ;;
-        --no-addon) addon=0; shift ;;
-        -h|--help) sed -n '2,4p' "$0" | cut -c3-; exit 0 ;;
+        --build-addon) addon=1; shift ;;
+        -h|--help) sed -n '2,5p' "$0" | cut -c3-; exit 0 ;;
         *) echo "Unknown option: $1" >&2; exit 2 ;;
     esac
 done
@@ -67,11 +68,11 @@ cp "$here"/profile/chrome/*.css "$profile/chrome/"
 echo "Installed user.js and chrome/ into: $profile"
 
 if ((addon)); then
-    command -v zip >/dev/null || { echo "zip is not installed. Install it, or use --no-addon." >&2; exit 1; }
+    command -v zip >/dev/null || { echo "zip is not installed. Install it to use --build-addon." >&2; exit 1; }
     mkdir -p "$here/dist"
     rm -f "$here/dist/graphite-start.xpi"
     (cd "$here/startpage" && zip -qr "$here/dist/graphite-start.xpi" .)
-    echo "Built the start page: $here/dist/graphite-start.xpi"
+    echo "Built the unsigned start page: $here/dist/graphite-start.xpi"
 fi
 
 if [[ -L $profile/lock ]]; then
@@ -83,10 +84,8 @@ cat <<NEXT
 Next:
   1. Restart the browser.
 NEXT
-if ((addon)); then
-    cat <<NEXT
-  2. Open about:config and set xpinstall.signatures.required to false (LibreWolf).
-  3. Open about:addons, click the gear, choose Install Add-on From File, and pick
-     dist/graphite-start.xpi. See README.md if you use Firefox.
+cat <<NEXT
+  2. For the start page, download graphite-start.xpi from the newest version on
+     https://github.com/absentlo/librewolf-css/releases
+     then open about:addons, click the gear, and choose Install Add-on From File.
 NEXT
-fi

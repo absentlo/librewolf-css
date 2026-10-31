@@ -10,7 +10,7 @@ A minimal gray theme and customizable new tab page for LibreWolf, built for low-
 
 ## Install
 
-You need LibreWolf opened at least once, plus `zip` and [JetBrainsMono Nerd Font](https://www.nerdfonts.com/) (on Arch: `sudo pacman -S zip ttf-jetbrains-mono-nerd`).
+You need LibreWolf opened at least once, plus [JetBrainsMono Nerd Font](https://www.nerdfonts.com/) (on Arch: `sudo pacman -S ttf-jetbrains-mono-nerd`).
 
 **1. Install the theme**
 
@@ -24,9 +24,11 @@ Restart LibreWolf. The script backs up your existing `user.js` and `chrome` fold
 
 **2. Install the start page**
 
-1. Open `about:config` and set `xpinstall.signatures.required` to `false`. The add-on isn't signed by Mozilla, and this lets LibreWolf install any unsigned add-on, so only install files you trust.
+The add-on is signed by Mozilla, so it needs no changes in `about:config`.
+
+1. Download `graphite-start.xpi` from the newest version on [Releases](https://github.com/absentlo/librewolf-css/releases).
 2. Open `about:addons`, click the gear, and choose **Install Add-on From File**.
-3. Pick `dist/graphite-start.xpi`, also available from [Releases](https://github.com/absentlo/librewolf-css/releases), and click **Add**.
+3. Pick the file and click **Add**.
 
 **3. Customize it**
 
@@ -34,7 +36,7 @@ Open a new tab and click the pencil in the bottom-right corner.
 
 For private windows too: in `about:addons`, open **Graphite Start** and set **Run in Private Windows** to **Allow**.
 
-> **Firefox:** only LibreWolf 159 has been tested. Regular Firefox refuses unsigned add-ons, so load `startpage/manifest.json` from `about:debugging` instead. It disappears when the browser restarts.
+> **Firefox:** the add-on needs version 140 or newer, but only LibreWolf 159 has been tested.
 
 ## What the pencil panel does
 
@@ -66,7 +68,7 @@ Don't copy a whole profile folder: the browser can end up pointing at the copy i
 - **Window buttons:** on a tiling window manager such as i3 or sway, uncomment the marked block in `userChrome.css` to hide them.
 - **Preferences:** `user.js` has a comment on every setting. If you delete a line, also reset that setting in `about:config`.
 - **Video:** `user.js` turns off AV1, which helps most older PCs. If your GPU decodes AV1, delete that line and reset the setting.
-- **The start page's code:** raise `version` in `startpage/manifest.json`, run `./install.sh`, and install the new `.xpi`.
+- **The start page's code:** raise `version` in `startpage/manifest.json` and run `./install.sh --build-addon` (needs `zip`). Your build is unsigned, so installing it needs `xpinstall.signatures.required` set to `false` in `about:config`, which lets LibreWolf install any unsigned add-on.
 
 **Before updating the add-on,** keep a normal website tab open. Updating closes the start page's tabs, and if they're the only ones open, the window closes too.
 
@@ -85,7 +87,6 @@ Searches go to the engine you pick. Nothing else on the page uses the network.
 ## Problems
 
 - **No theme:** check that `toolkit.legacyUserProfileCustomizations.stylesheets` is `true` and that you installed into the profile in use.
-- **"Could not be verified" on the add-on:** set `xpinstall.signatures.required` to `false`.
 - **Something broke after a browser update:** updates can rename what the theme targets. Set `devtools.chrome.enabled` to `true`, then press `Ctrl+Alt+Shift+I` to inspect the browser.
 - **Wrong time:** type your zone in **Time zone**, such as `Europe/Berlin`.
 - **A setting keeps coming back:** `user.js` reapplies at every start, so change it there.
