@@ -1,0 +1,226 @@
+/* Graphite LibreWolf.
+   Customize: edit the variables below, then restart LibreWolf.
+   Debug live: about:config devtools.chrome.enabled=true, then Ctrl+Alt+Shift+I */
+
+:root {
+  --g-bg:      #111111;  /* tab strip, toolbar */
+  --g-surface: #1C1C1C;  /* selected tab, url bar */
+  --g-border:  #3A3A3A;
+  --g-fg:      #D8D8D8;
+  --g-muted:   #9A9A9A;
+  --g-icon:    #8A8A8A;  /* toolbar icons, like the polybar icon gray */
+  --g-radius:  8px;
+  --g-tab-height: 24px;
+  --g-font: "JetBrainsMono Nerd Font";
+  --g-font-size: 11px;
+}
+
+/* Recolor the built-in dark theme */
+:root {
+  --lwt-accent-color: var(--g-bg) !important;
+  --lwt-text-color: var(--g-fg) !important;
+  /* LibreWolf 158+: tab strip color, otherwise it falls back to the GTK gray */
+  --toolbox-background-color: var(--g-bg) !important;
+  --toolbox-background-color-inactive: var(--g-bg) !important;
+  --toolbox-text-color: var(--g-fg) !important;
+  --toolbox-text-color-inactive: var(--g-muted) !important;
+  --toolbar-background-color: var(--g-bg) !important;
+  --toolbar-text-color: var(--g-fg) !important;
+  --toolbar-field-background-color: var(--g-surface) !important;
+  --toolbar-field-background-color-focus: var(--g-surface) !important;
+  --toolbar-field-text-color: var(--g-fg) !important;
+  --toolbar-field-border-color-focus: var(--g-border) !important;
+  --tab-background-color-selected: var(--g-surface) !important;
+  --tab-text-color-selected: var(--g-fg) !important;
+  --panel-background-color: var(--g-bg) !important;
+  --panel-text-color: var(--g-fg) !important;
+  --panel-border-color: var(--g-border) !important;
+  --chrome-content-separator-color: var(--g-border) !important;
+  --tab-border-radius: var(--g-radius) !important;
+  --toolbarbutton-border-radius: var(--g-radius) !important;
+  --tab-min-height: var(--g-tab-height) !important;
+  --toolbarbutton-icon-fill: var(--g-icon) !important;
+  --panel-border-radius: var(--g-radius) !important;
+}
+
+/* Rounded url bar, popups and menus */
+#urlbar-background, .urlbarView { border-radius: var(--g-radius) !important; }
+menupopup, panel { --panel-border-radius: var(--g-radius) !important; }
+
+/* Gray icons, brighter on hover */
+.toolbarbutton-1 > .toolbarbutton-icon,
+.toolbarbutton-1 > .toolbarbutton-badge-stack { fill: var(--g-icon) !important; }
+.toolbarbutton-1:hover > .toolbarbutton-icon,
+.toolbarbutton-1:hover > .toolbarbutton-badge-stack { fill: var(--g-fg) !important; }
+
+/* Rice font on tabs and url bar */
+.tab-label, #urlbar-input, .urlbarView {
+  font-family: var(--g-font) !important;
+  font-size: var(--g-font-size) !important;
+}
+
+/* Background tabs dimmed, active tab gets a thin outline instead of a glow */
+.tabbrowser-tab:not([selected]) .tab-label { color: var(--g-muted) !important; }
+.tab-background[selected] {
+  box-shadow: none !important;
+  outline: 1px solid var(--g-border) !important;
+}
+
+/* Close button only on hover/selected - less clutter */
+.tabbrowser-tab:not([selected]):not(:hover) .tab-close-button { display: none !important; }
+
+/* Flat url bar with a subtle border */
+#urlbar-background {
+  border: 1px solid var(--g-border) !important;
+  box-shadow: none !important;
+}
+
+/* Compact: thinner tabs, toolbar and url bar, no wasted gaps */
+:root {
+  --tab-margin-block: 2px !important;
+  --tab-padding-inline: 6px !important;
+  --toolbarbutton-padding-outer: 1px !important;
+  --toolbarbutton-padding-inner: 5px !important;
+  --toolbar-padding-inline: 2px !important;
+  --urlbar-height: 24px !important;
+}
+#nav-bar { padding-block: 0 !important; }
+#urlbar-container { padding-block: 2px !important; margin-inline: 2px !important; }
+toolbarspring { min-width: 0 !important; max-width: 8px !important; }
+.titlebar-spacer { display: none !important; }
+
+/* Hover states in the same grays */
+:root {
+  --toolbarbutton-background-color-hover: var(--g-surface) !important;
+  --toolbarbutton-background-color-active: var(--g-border) !important;
+  --urlbarview-background-color-selected: var(--g-border) !important;
+  --urlbarview-text-color-selected: var(--g-fg) !important;
+  --urlbarview-background-color-hover: var(--g-surface) !important;
+}
+.tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected]) {
+  background-color: var(--g-surface) !important;
+}
+.tabbrowser-tab:hover .tab-label { color: var(--g-fg) !important; }
+
+/* Menus, context menus and popups */
+menupopup, panel {
+  --panel-background-color: var(--g-bg) !important;
+  --panel-text-color: var(--g-fg) !important;
+  --panel-border-color: var(--g-border) !important;
+}
+menupopup menuitem:hover, menupopup menu:hover,
+menupopup menuitem[_moz-menuactive], menupopup menu[_moz-menuactive] {
+  background-color: var(--g-surface) !important;
+  color: var(--g-fg) !important;
+}
+
+/* Find bar and sidebar match the toolbar */
+findbar, #sidebar-box, #sidebar-header {
+  background-color: var(--g-bg) !important;
+  color: var(--g-fg) !important;
+  border-color: var(--g-border) !important;
+}
+
+/* On a tiling window manager (i3, sway, Hyprland), uncomment this to hide the window buttons:
+.titlebar-buttonbox-container { display: none !important; }
+*/
+
+/* Declutter: no account sync, no AI buttons */
+#fxa-toolbar-menu-button,
+#ai-window-toggle,
+#smartwindow-group-tabs-button { display: none !important; }
+
+/* Panels (downloads, extensions, app menu) hover in the same grays */
+:root {
+  --button-background-color-menu-hover: var(--g-surface) !important;
+  --button-background-color-menu-active: var(--g-border) !important;
+  --panel-separator-color: var(--g-border) !important;
+  --focus-outline-color: var(--g-muted) !important;
+  --tab-icon-fill-loading: var(--g-fg) !important;
+  --urlbar-box-background-color-hover: var(--g-border) !important;
+}
+
+/* Rice font everywhere in the chrome, not only tabs */
+menupopup, panel, #PersonalToolbar, findbar, .panel-subview-body {
+  font-family: var(--g-font) !important;
+  font-size: var(--g-font-size) !important;
+}
+
+/* No separator lines between tabs, gray tab-strip buttons */
+.tabbrowser-tab::after, .tabbrowser-tab::before { display: none !important; }
+#tabbrowser-tabs { border-inline-start: none !important; }
+#TabsToolbar .toolbarbutton-1 { fill: var(--g-icon) !important; }
+
+/* URL bar: muted placeholder and site icons, gray text selection */
+#urlbar-input::placeholder { color: var(--g-muted) !important; opacity: 1 !important; }
+#identity-box, #tracking-protection-icon-container, #page-action-buttons {
+  fill: var(--g-icon) !important;
+}
+#urlbar-input::selection { background-color: var(--g-border) !important; color: var(--g-fg) !important; }
+
+/* Tab favicons gray and slightly faded on background tabs; real colors on hover or when selected */
+.tabbrowser-tab:not([selected]):not(:hover) .tab-icon-image { filter: grayscale(1) !important; opacity: 0.7 !important; }
+
+/* Tooltips and chrome scrollbars */
+tooltip {
+  --tooltip-background: var(--g-surface) !important;
+  --tooltip-foreground: var(--g-fg) !important;
+  --tooltip-border: var(--g-border) !important;
+  font-family: var(--g-font) !important;
+  font-size: var(--g-font-size) !important;
+}
+:root { scrollbar-color: var(--g-border) var(--g-bg) !important; }
+
+/* Pinned tabs: icon only, tight */
+.tabbrowser-tab[pinned] { padding-inline: 0 !important; }
+.tabbrowser-tab[pinned] .tab-content { padding-inline: 8px !important; }
+/* Bookmark-toolbar icons in gray; real colors on hover */
+#PersonalToolbar .bookmark-item:not(:hover) > .toolbarbutton-icon,
+menupopup .bookmark-item:not([_moz-menuactive]) :is(.menu-icon, .menu-iconic-icon) { filter: grayscale(1) !important; }
+
+/* Playing/muted tab indicator in gray instead of the default color */
+.tab-icon-overlay, .tab-audio-button { fill: var(--g-icon) !important; }
+
+/* Graphite start page (extension new tab): no "Extension (...)" chip or shield,
+   the bar just shows the search placeholder. Normal sites keep both icons. */
+#identity-box.extensionPage #identity-icon-box,
+#urlbar-input-container:has(#identity-box.extensionPage) #tracking-protection-icon-container {
+  display: none !important;
+}
+
+/* Split view: thin border on the active pane instead of the bright 2px focus ring */
+#tabbrowser-tabpanels[splitview] .split-view-panel.deck-selected > .browserContainer {
+  outline: 1px solid var(--g-border) !important;
+}
+
+/* LibreWolf 158 paints the tab scroller GTK gray; let the #111 strip show through */
+#tabbrowser-arrowscrollbox { background: transparent !important; }
+/* ...and no gradient/theme image over the strip, just the flat #111 */
+body, #navigator-toolbox, #TabsToolbar { background-image: none !important; }
+/* The strip ends up 2px shorter than tab + margins and the tab is pushed up flush with the top;
+   pad the top so the space above and below the tabs is equal */
+#TabsToolbar { padding-top: 2px !important; }
+/* Close button 24px -> 20px so it fits split-view tabs (20px tall); otherwise the selected
+   tab's content is taller than its partner's and the two labels end up 2px apart */
+:root {
+  --tab-content-button-size: 20px !important;
+  --tab-content-button-padding: 4px !important;
+}
+
+/* Links in the browser UI (URLs in the address bar dropdown, "Learn more" in panels):
+   gray instead of the cyan LibreWolf forces on dark themes */
+:root {
+  --link-color: var(--g-muted) !important;
+  --link-color-hover: var(--g-fg) !important;
+  --link-color-active: var(--g-fg) !important;
+}
+
+/* Container colors softened to the rice's TTY palette (same tones as GRUB vt.default_*) */
+.identity-color-blue { --identity-tab-color: #7A98B8 !important; --identity-icon-color: #7A98B8 !important; }
+.identity-color-turquoise { --identity-tab-color: #7FAFAF !important; --identity-icon-color: #7FAFAF !important; }
+.identity-color-green { --identity-tab-color: #8FA876 !important; --identity-icon-color: #8FA876 !important; }
+.identity-color-yellow { --identity-tab-color: #C9B27C !important; --identity-icon-color: #C9B27C !important; }
+.identity-color-orange { --identity-tab-color: #C98F6A !important; --identity-icon-color: #C98F6A !important; }
+.identity-color-red { --identity-tab-color: #C46A6A !important; --identity-icon-color: #C46A6A !important; }
+.identity-color-pink { --identity-tab-color: #C48AA0 !important; --identity-icon-color: #C48AA0 !important; }
+.identity-color-purple { --identity-tab-color: #A58AB5 !important; --identity-icon-color: #A58AB5 !important; }
