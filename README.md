@@ -53,7 +53,7 @@ Your theme lives **inside the profile folder**, and a new profile starts empty. 
 1. In the old profile, open the panel and click **export**.
 2. Open the new profile once, close it, and run `./install.sh`.
 3. Install the start page again (step 2 above), then click **import**.
-4. Tick **Page icons** and **Most visited** again, since permissions don't carry over.
+4. Tick **Weather**, **Page icons** and **Most visited** again, since permissions don't carry over.
 
 The backup holds your wallpaper and page addresses in plain text, so keep it private.
 
@@ -72,7 +72,7 @@ Don't copy a whole profile folder: the browser can end up pointing at the copy i
 
 ## Privacy
 
-These are all off until you turn them on.
+These are all off until you turn them on, and LibreWolf asks your permission first for Weather and Page icons.
 
 | Option | What it contacts | What that sees |
 |---|---|---|
