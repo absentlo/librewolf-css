@@ -4,7 +4,7 @@ A minimal gray theme and new tab page for LibreWolf, made for low-spec PCs. No a
 
 > **Version 0.5: early testing.** Expect rough edges and changes.
 
-![LibreWolf with the Graphite theme and start page](screenshots/start-page.png)
+![Customizing the Graphite theme and start page in LibreWolf](screenshots/demo.gif)
 
 ## Install
 
